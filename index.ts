@@ -14,10 +14,30 @@ enum Tile {
   KEY2, LOCK2
 }
 
-enum Input {
-  UP, DOWN, LEFT, RIGHT
+interface Input {
+  isRight(): boolean;
+  isLeft(): boolean;
+  isUp(): boolean;
+  isDown(): boolean;
 }
-
+class InputBase implements Input {
+  isRight() { return false; }
+  isLeft() { return false; }
+  isUp() { return false; }
+  isDown() { return false; }
+}
+class Right extends InputBase {
+  isRight() { return true; }
+}
+class Left extends InputBase {
+  isLeft() { return true; }
+}
+class Up extends InputBase {
+  isUp() { return true; }
+}
+class Down extends InputBase {
+  isDown() { return true; }
+}
 let playerx = 1;
 let playery = 1;
 let map: Tile[][] = [
@@ -93,13 +113,13 @@ function handleInputs() {
 }
 
 function handleInput(input: Input) {
-  if (input === Input.LEFT)
+  if (input.isLeft())
     moveHorizontal(-1);
-  else if (input === Input.RIGHT)
+  else if (input.isRight())
     moveHorizontal(1);
-  else if (input === Input.UP)
+  else if (input.isUp())
     moveVertical(-1);
-  else if (input === Input.DOWN)
+  else if (input.isDown())
     moveVertical(1);
 }
 
@@ -187,9 +207,9 @@ const UP_KEY = "ArrowUp";
 const RIGHT_KEY = "ArrowRight";
 const DOWN_KEY = "ArrowDown";
 window.addEventListener("keydown", e => {
-  if (e.key === LEFT_KEY || e.key === "a") inputs.push(Input.LEFT);
-  else if (e.key === UP_KEY || e.key === "w") inputs.push(Input.UP);
-  else if (e.key === RIGHT_KEY || e.key === "d") inputs.push(Input.RIGHT);
-  else if (e.key === DOWN_KEY || e.key === "s") inputs.push(Input.DOWN);
+  if (e.key === LEFT_KEY || e.key === "a") inputs.push(new Left());
+  else if (e.key === UP_KEY || e.key === "w") inputs.push(new Up());
+  else if (e.key === RIGHT_KEY || e.key === "d") inputs.push(new Right());
+  else if (e.key === DOWN_KEY || e.key === "s") inputs.push(new Down());
 });
 
