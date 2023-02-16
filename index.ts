@@ -19,24 +19,46 @@ interface Input {
   isLeft(): boolean;
   isUp(): boolean;
   isDown(): boolean;
+
+  handle(): void;
 }
 class InputBase implements Input {
   isRight() { return false; }
   isLeft() { return false; }
   isUp() { return false; }
   isDown() { return false; }
+
+  handle(): void {
+    throw new Error("Method not implemented.");
+  }
 }
 class Right extends InputBase {
   isRight() { return true; }
+
+  handle() {
+    moveHorizontal(1);
+  }
 }
 class Left extends InputBase {
   isLeft() { return true; }
+
+  handle() {
+    moveHorizontal(-1);
+  }
 }
 class Up extends InputBase {
   isUp() { return true; }
+
+  handle() {
+    moveVertical(-1);
+  }
 }
 class Down extends InputBase {
   isDown() { return true; }
+
+  handle() {
+    moveVertical(1);
+  }
 }
 let playerx = 1;
 let playery = 1;
@@ -113,14 +135,7 @@ function handleInputs() {
 }
 
 function handleInput(input: Input) {
-  if (input.isLeft())
-    moveHorizontal(-1);
-  else if (input.isRight())
-    moveHorizontal(1);
-  else if (input.isUp())
-    moveVertical(-1);
-  else if (input.isDown())
-    moveVertical(1);
+  input.handle();
 }
 
 function updateMap() {
