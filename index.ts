@@ -14,6 +14,71 @@ enum Tile {
   KEY2, LOCK2
 }
 
+interface Tile2 {
+  isAir(): boolean;
+  isFlux(): boolean;
+  isUnbreakable(): boolean;
+  isPlayer(): boolean;
+  isStone(): boolean;
+  isFallingStone(): boolean;
+  isBox(): boolean;
+  isFallingBox(): boolean;
+  isKey1(): boolean;
+  isLock1(): boolean;
+  isKey2(): boolean;
+  isLock2(): boolean;
+}
+abstract class TileBase implements Tile2 {
+  isAir() { return false; }
+  isFlux() { return false; }
+  isUnbreakable() { return false; }
+  isPlayer() { return false; }
+  isStone() { return false; }
+  isFallingStone() { return false; }
+  isBox() { return false; }
+  isFallingBox() { return false; }
+  isKey1() { return false; }
+  isLock1() { return false; }
+  isKey2() { return false; }
+  isLock2() { return false; }
+}
+class Air extends TileBase {
+  isAir() { return true; }
+}
+class Flux extends TileBase {
+  isFlux() { return true; }
+}
+class Unbreakable extends TileBase {
+  isUnbreakable() { return true; }
+}
+class Player extends TileBase {
+  isPlayer() { return true; }
+}
+class Stone extends TileBase {
+  isStone() { return true; }
+}
+class FallingStone extends TileBase {
+  isFallingStone() { return true; }
+}
+class Box extends TileBase {
+  isBox() { return true; }
+}
+class FallingBox extends TileBase {
+  isFallingBox() { return true; }
+}
+class Key1 extends TileBase {
+  isKey1() { return true; }
+}
+class Lock1 extends TileBase {
+  isLock1() { return true; }
+}
+class Key2 extends TileBase {
+  isKey2() { return true; }
+}
+class Lock2 extends TileBase {
+  isLock2() { return true; }
+}
+
 interface Input {
   isRight(): boolean;
   isLeft(): boolean;
@@ -22,7 +87,7 @@ interface Input {
 
   handle(): void;
 }
-class InputBase implements Input {
+abstract class InputBase implements Input {
   isRight() { return false; }
   isLeft() { return false; }
   isUp() { return false; }
