@@ -14,7 +14,7 @@ enum RawTile {
   KEY2, LOCK2,
 }
 
-interface Tile2 {
+interface Tile {
   isAir(): boolean;
   isFlux(): boolean;
   isUnbreakable(): boolean;
@@ -28,7 +28,7 @@ interface Tile2 {
   isKey2(): boolean;
   isLock2(): boolean;
 }
-abstract class TileBase implements Tile2 {
+abstract class TileBase implements Tile {
   isAir() { return false; }
   isFlux() { return false; }
   isUnbreakable() { return false; }
@@ -135,11 +135,11 @@ let rawMap: RawTile[][] = [
   [2, 4, 1, 1, 1, 9, 0, 2],
   [2, 2, 2, 2, 2, 2, 2, 2],
 ];
-let map: Tile2[][];
+let map: Tile[][];
 function assertExhausted(x: never): never {
   throw new Error("Unexpected object: " + x);
 }
-function transformTile(tile: RawTile): Tile2 {
+function transformTile(tile: RawTile): Tile {
   switch (tile) {
     case RawTile.AIR: return new Air();
     case RawTile.FLUX: return new Flux();
